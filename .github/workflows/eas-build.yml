@@ -14,6 +14,34 @@ jobs:
       - name: Set up Node.js environment
         uses: actions/setup-node@v4
         with:
+          node-version: 20
+
+      - name: Setup EAS CLI inside GitHub
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          eas-cache: false
+          packager: npm
+
+      - name: Execute EAS Command
+        run: eas --version
+name: EAS Build via GitHub
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v4
+        with:
           node-version: 18
 
       - name: Setup EAS CLI inside GitHub
